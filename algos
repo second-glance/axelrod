@@ -276,14 +276,14 @@ grudger = function(p, o) {
 # first 10 moves and then plays Grudger (*).
 # This strategy came 8th in Axelrod’s original tournament.
 
-# (*) I've assumed it only plays Grudger using data from round 10 onward...
+# (*) I've assumed it only plays Grudger using data from round 9 onward...
 
 davis = function(p, o) {
 	round <- length(p)+1
 	if(round %in% 1:10) {
 		res <- TRUE
 	} else {
-		res <- all(o[10:n])
+		res <- all(o[9:n])
 	}
 	return(res)
 }
