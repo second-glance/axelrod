@@ -494,7 +494,7 @@ wsls = function(p, o) {
 
 # Always cooperates.
 
-alls = function(p, o) TRUE
+allc = function(p, o) TRUE
 
 
 # -------------------------------------------------------------------------- #
