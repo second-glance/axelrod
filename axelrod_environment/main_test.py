@@ -17,7 +17,6 @@ ce.add_algo("Clem","Yes Man!",yes_man)
 ce.add_algo("Clem","IDK!",idk)
 ce.add_algo("Un mecreant","R Yes Man!",r_yes_man)
 ce.add_algo("Un mecrean","Shubik",r_shubik)
-ce._compete(ce.algos['Yes Man!'],ce.algos['La balance'])
 ce.full_competition()
 x = ce._output_scores()
 for alg in x:
