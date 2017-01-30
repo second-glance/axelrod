@@ -4,10 +4,10 @@ Stuff for the Axelrod Reloaded contest.
 ## Development Notes
 So Far, the core of the development is in the python_environment_0 branch.
 It includes:
-<li>
-  <ul>The main classes</ul>
-  <ul>Some variables (in dummy_algo.py and main_test.py) to test the classes</ul>
-</li>
+<ul>
+  <li>The main classes</li>
+  <li>Some variables (in dummy_algo.py and main_test.py) to test the classes</li>
+</ul>
 
 The current version is slow and not user friendly in terms of inputs and outputs.
 
