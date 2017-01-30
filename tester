@@ -1,0 +1,41 @@
+
+
+# -------------------------------------------------------------------------- #
+# play
+# -------------------------------------------------------------------------- #
+
+# Simulates a n-rounds match between two algos and returns a data.frame
+# filled with logicals. TRUE means cooperates, FALSE means defects.
+
+play = function(fa, fb, n = 200) {
+	if(! is.function(fa)) stop("'fa' and 'fb' must be functions")
+	if(! is.function(fb)) stop("'fa' and 'fb' must be functions")
+	a <- b <- logical(0)
+	for(i in 1:n) {
+		ai <- fa(a, b)
+		bi <- fb(b, a)
+		a <- c(a, ai)
+		b <- c(b, bi)
+	}
+	res <- data.frame(a = a, b = b)
+	return(res)
+}
+
+
+# -------------------------------------------------------------------------- #
+# payoffs
+# -------------------------------------------------------------------------- #
+
+# Computes the payoffs of a match generated with play().
+
+payoffs = function(x, t = 5, r = 3, p = 1, s = 0) {
+	if(! is.data.frame(x)) stop("'x' must be a data.frame")
+	a <- b <- r * sum(x$a & x$b) + p * sum(!x$a & !x$b)
+	a <- a + s * sum(x$a & !x$b) + t * sum(!x$a & x$b)
+	b <- b + s * sum(!x$a & x$b) + t * sum(x$a & !x$b)
+	res <- c(a, b)
+	names(res) <- colnames(x)
+	return(res)
+}
+
+
