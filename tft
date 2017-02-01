@@ -1,0 +1,16 @@
+# ========================================================================== #
+# Tit-For-Tat
+# ========================================================================== #
+
+# Coopère au premier round puis reproduit le coup de son opposant au round
+# précédent.
+
+# Auteur :
+# Anatol Rapoport (1911-2007)
+
+# Programmeur :
+# GN
+
+tft = function(p, o) {
+	ifelse(length(p) == 0, TRUE, tail(o, 1))
+}
