@@ -1,0 +1,15 @@
+# ========================================================================== #
+# Random
+# ========================================================================== #
+
+# Coopère ou fait défaut de façon aléatoire avec une probabilité de 1/2.
+
+# Auteur :
+# Robert Axelrod
+
+# Programmeur :
+# GN
+
+random = function(p, o) {
+	sample(c(T, F), 1)
+}
