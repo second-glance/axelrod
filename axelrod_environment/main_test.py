@@ -11,8 +11,8 @@ from dummy_algo import *
 
 ce = axelrod_environment(200)
 
-ce.add_algo("Clem","La balance",la_balance)
-ce.add_algo("Melc","La balance, le retour",la_balance)
+#ce.add_algo("Clem","La balance",la_balance)
+#ce.add_algo("Melc","La balance, le retour",la_balance)
 ce.add_algo("Clem","Yes Man!",yes_man)
 ce.add_algo("Mecreant","Generous Tit for tat","generous_tit_for_tat","r")
 ce.full_competition()

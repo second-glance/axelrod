@@ -1,4 +1,7 @@
-s <- 'T,T,F|F,T,F'
+input <- file('stdin','r')
+s <- readLines(input,n=1)
+length(s)
 x <- strsplit(s,split='[|]')
-strsplit(x[[1]][2],split='[,]')[[1]]
-x
+y <- strsplit(x[[1]][1],split='[,]')[[1]]
+cat(y)
+

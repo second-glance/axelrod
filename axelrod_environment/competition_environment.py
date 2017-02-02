@@ -147,13 +147,15 @@ class axelrod_environment:
         for i,name in enumerate(self.algos):
             alg1 = self.algos[name]
             alg1.begin_match()
-            for j in range(i):
+            for j in range(i+1):
                 alg2 = self.algos[ks[j]]
                 alg2.begin_match()
                 t1 = datetime.datetime.now()
                 self._compete(alg1,alg2)
                 t2 = datetime.datetime.now()
                 print("Fight between {} and {} in {}".format(alg1.name,alg2.name,t2-t1))
+                alg2.end_match()
+            alg1.end_match()
         return self._output_scores()
     
     

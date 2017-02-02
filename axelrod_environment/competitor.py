@@ -6,6 +6,8 @@ Created on Mon Jan 30 11:19:28 2017
 """
 
 import subprocess
+import string
+
 
 class competitor_algorithm(object):
     """
@@ -77,13 +79,24 @@ class competitor_algorithm(object):
         
     def begin_match(self):
         pass
+    
+    def end_match(self):
+        pass
         
     def __call__(self,self_decision,other_decision):
         """
         Shorcut for self.algo(x,y)
         """
         return self.algo(self_decision,other_decision)
-        
+
+
+
+def r_formatting(x):
+    if x:
+        return 'T'
+    else:
+        return 'F'
+
 class r_competitor_algorithm(competitor_algorithm):
     
     def __init__(self,author,name,algo):
@@ -92,20 +105,18 @@ class r_competitor_algorithm(competitor_algorithm):
     def begin_match(self):
         self.subprocess = subprocess.Popen(['Rscript', 'r_wrapper.r', 'generous_tit_for_tat.r'],stdin=subprocess.PIPE,stdout=subprocess.PIPE)
         
-        
+    def end_match(self):
+        self.subprocess.kill()
     
     def __call__(self,self_decision,other_decision):
         #args = [self.algo]
-        args = [x.__str__().lower() for x in self_decision]
-        args = args + [ x.__str__().lower() for x in other_decision]
-        print(args)
-        self.subprocess.stdin.write('T,T,T,F,F|T,T,F,T,F\n')
-        self.subprocess.stdout.
-        cmd = ['Rscript','r_wrapper.r'] + args
-        answer = subprocess.check_output(cmd, universal_newlines=True)
-        if(answer == 'TRUE'):
+        args = string.join(map(r_formatting,self_decision),sep=',')
+        args = args + '|' + string.join(map(r_formatting,other_decision),sep=',') + '\n'
+        self.subprocess.stdin.write(args)
+        answer = self.subprocess.stdout.readline()
+        if(answer == 'T\n'):
             res = True
-        elif answer == 'FALSE':
+        elif answer == 'F\n':
             res = False
         else:
             raise Exception("Not a good answer")

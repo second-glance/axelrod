@@ -14,27 +14,36 @@ source(fun_to_call)
 # Function to split input from stdin
 splitstdin <- function(stdinstr)
 {
+  if(stdinstr != '|')
+  {
   split1 <- strsplit(stdinstr,split = '[|]')
   dec1 <-sapply(strsplit(split1[[1]][1],split = '[,]')[[1]],function(x){if(x=='true'){T}else{F}},USE.NAMES = F)
   dec2 <-sapply(strsplit(split1[[1]][2],split = '[,]')[[1]],function(x){if(x=='true'){T}else{F}},USE.NAMES = F)  
+  }else{
+  dec1 <- dec2 <- logical(0)
+  }
   return(list(dec1,dec2))
 }
 
 
-#cat(axelrod(decision1,decision2))
-
-input <-file('stdin','r')
 
 
 
-while(length(line <- readLines(input,n=1)) > 0) {
+
+while(T) {
+  input <-file('stdin','r')
+  line <- readLines(input,n=1)
   previous <- splitstdin(line)
   selfdec <- previous[[1]]
   otherdec <- previous[[2]]
-  print(selfdec)
-  print(otherdec)
-  write(axelrod(selfdec,otherdec),stdout())
+  if(axelrod(selfdec,otherdec))
+  {
+    write('T',stdout())
+  }else
+  {
+    write('F',stdout())
   }
+}
 
 
 
