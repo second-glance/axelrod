@@ -5,6 +5,8 @@ Created on Mon Jan 30 11:19:28 2017
 @author: clem
 """
 
+import subprocess
+
 class competitor_algorithm(object):
     """
     Description
@@ -73,13 +75,38 @@ class competitor_algorithm(object):
         """
         self.score = self.score + add_score
         
+    def begin_match(self):
+        pass
+        
     def __call__(self,self_decision,other_decision):
         """
         Shorcut for self.algo(x,y)
         """
         return self.algo(self_decision,other_decision)
         
-class r_competitor_algorithm(competitor_algorithm):    
+class r_competitor_algorithm(competitor_algorithm):
+    
+    def __init__(self,author,name,algo):
+        competitor_algorithm.__init__(self,author,name,algo + ".r")
+        
+    def begin_match(self):
+        self.subprocess = subprocess.Popen(['Rscript', 'r_wrapper.r', 'generous_tit_for_tat.r'],stdin=subprocess.PIPE,stdout=subprocess.PIPE)
+        
+        
     
     def __call__(self,self_decision,other_decision):
-        return 
+        #args = [self.algo]
+        args = [x.__str__().lower() for x in self_decision]
+        args = args + [ x.__str__().lower() for x in other_decision]
+        print(args)
+        self.subprocess.stdin.write('T,T,T,F,F|T,T,F,T,F\n')
+        self.subprocess.stdout.
+        cmd = ['Rscript','r_wrapper.r'] + args
+        answer = subprocess.check_output(cmd, universal_newlines=True)
+        if(answer == 'TRUE'):
+            res = True
+        elif answer == 'FALSE':
+            res = False
+        else:
+            raise Exception("Not a good answer")
+        return res

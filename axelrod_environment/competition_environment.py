@@ -7,6 +7,13 @@ Created on Mon Jan 30 11:17:05 2017
 
 from competitor import *
 import numpy as np
+import datetime
+
+
+map_languages_classes = {
+    'python': competitor_algorithm,
+    'r': r_competitor_algorithm    
+    }
 
 class axelrod_environment:
     """
@@ -36,7 +43,7 @@ class axelrod_environment:
         #Switch scores
         self.score_table = {(True,True): [3,3], (True,False): [0,5], (False,True): [5,0], (False,False): [1,1]}
    
-    def add_algo(self,author,name,algo):
+    def add_algo(self,author,name,algo,language = 'python'):
         """
         Add an algorithm by instanciating a new competitor_algorithm and adding it to the algos dictionary.
         
@@ -48,6 +55,8 @@ class axelrod_environment:
             Name of the algorithm
         algo: function (bool list -> bool list -> bool)
             Function that takes two list of bool as an input and returns a boolean value
+        language: str
+            Name of the language used to write the function
             
         Returns
         -------
@@ -59,7 +68,8 @@ class axelrod_environment:
         """
         if name in self.algos.keys():
             raise Exception("An algorithm named {} is already present in the competition. Please find an other name".format(name))
-        self.algos[name] = competitor_algorithm(author,name,algo)
+        self.algos[name] = map_languages_classes[language](author,name,algo)
+        
     
     def _update_scores(self,algo1,algo2,dec_alg1,dec_alg2):
         """
@@ -135,8 +145,15 @@ class axelrod_environment:
         """
         ks = self.algos.keys()
         for i,name in enumerate(self.algos):
+            alg1 = self.algos[name]
+            alg1.begin_match()
             for j in range(i):
-                self._compete(self.algos[name],self.algos[ks[j]])
+                alg2 = self.algos[ks[j]]
+                alg2.begin_match()
+                t1 = datetime.datetime.now()
+                self._compete(alg1,alg2)
+                t2 = datetime.datetime.now()
+                print("Fight between {} and {} in {}".format(alg1.name,alg2.name,t2-t1))
         return self._output_scores()
     
     
